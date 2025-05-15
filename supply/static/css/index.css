@@ -1,0 +1,79 @@
+body {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    background-color: white;
+
+    background-repeat: no-repeat;
+    background-size: cover;
+    backdrop-filter: calc();
+}
+
+.centerConfig {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.loginCard {
+    backdrop-filter: blur(5px);
+    background-color: rgba(255, 255, 255, 0.182);
+    border-radius: 20px;
+    border-color: black;
+    width: 250px;
+    display: grid;
+    margin: 0;
+    grid-gap: 0px;
+    box-shadow: 100px;
+    padding: 0.9%;
+}
+
+input {
+    font-size: 12px;
+    border-radius: 5px;
+    padding: 10px;
+    border: 5px;
+    color: black;
+    width: 230px;
+    outline: none;
+    background-color: #fb6e7036;
+}
+
+.fieldSet {
+    width: 100%;
+}
+
+p {
+    color: black;
+    font-size: larger;
+}
+
+.btn {
+    background: conic-gradient(from 219.21deg at 50% 50%,
+    #DEA0CE -59.38deg, #FB6E70 0.57deg, #FBB0B1 41.42deg,
+     #FC8EA6 183.62deg, #F4BDBE 243.02deg,
+      #DEA0CE 300.62deg, #FB6E70 360.57deg);
+    padding: 8.5px;
+    border-radius: 5px;
+    color: black;
+    font-weight: bold;
+    width: 250px;
+    outline: none;
+    border: 1px;
+}
+a{
+    color: rgb(199, 53, 148);
+}
+
+input[type='number']::-webkit-inner-spin-button{
+    appearance: none;
+}
+.refer{
+    font-size: small;
+    display: flex;
+    margin-bottom:35px;
+    justify-content:center;
+    align-items: center;
+}

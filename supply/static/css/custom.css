@@ -1,0 +1,217 @@
+body {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(#000000a9,#000000a9), url(https://blog.cloudticity.com/hubfs/benefits-of-medical-technology%20%281%29.jpg);
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-drag: none;
+    height: 100vh;
+    -moz-window-dragging: none;
+}
+
+.container2 {
+    background: linear-gradient(180deg, rgba(77, 27, 134, 0.94) 6.37%, #6A2D68 100%);
+    border-radius: 0px 10px 10px 0px;
+
+}
+img{
+    object-fit: cover;
+}
+
+input {
+    color: black;
+    margin: 0px;
+    border-color: transparent;
+    outline: none;
+    font-weight: lighter;
+    font-size: 15px;
+    padding: 10px;
+    border: 0px;
+    border-radius: 10px 10px;
+}
+
+input::placeholder {
+    font-weight: bolder;
+    color: black;
+    font-size: 15px;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+    display: none;
+}
+
+.editText {
+    display: flex;
+    justify-content: center;
+    background-color: #e9b7f6ce;
+    border-radius: 10px 10px;
+    padding: 10px;
+    margin: 5px;
+}
+
+.btn {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding: 10px 20px;
+    border: none;
+    font-weight: lighter;
+    outline: none;
+    animation: 1000ms;
+    font-size: 18px;
+    border-radius: 10px 10px;
+    transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+    background-color: #e9b7f6ce;
+    transition-delay: 200ms;
+}
+
+.btn:hover {
+    border-color: #e9b7f6da;
+    padding: 10px 30px;
+    transition-delay: 0ms;
+}
+
+.btnDecor {
+    border: none;
+    outline: none;
+
+    padding: 10px 20px;
+    background: #f3f3f396;
+    backdrop-filter: blur(2px);
+    border-radius: 10px 10px;
+    transition-delay: 200ms;
+}
+
+textarea::-webkit-inner-spin-button {
+    display: none;
+}
+
+textarea {
+    resize: none;
+    outline: none;
+    color: black;
+    height: 100%;
+    border: none;
+    width: 200px;
+    vertical-align: bottom;
+    text-align: left;
+}
+
+textarea::placeholder {
+    color: black;
+}
+
+.btnDecor:hover {
+    padding: 10px 30px;
+}
+
+#snackBar {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 3px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    left: 50%;
+    bottom: 30px;
+}
+
+#snackBar.show {
+    border-radius: 10px 10px;
+    background: linear-gradient(180deg, rgba(77, 27, 134, 0.94) 6.37%, #6A2D68 100%);
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@keyframes fadein {
+    from {
+        bottom: 0;
+        opacity: 0;
+    }
+
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+
+    to {
+        bottom: 0;
+        opacity: 0;
+    }
+}
+
+.divNav {}
+
+#col-12 {
+    display: flex;
+    justify-content: center;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+}
+
+a {
+    text-decoration: none;
+    padding: 10px 30px;
+    padding: 10px;
+    margin-right: 40px;
+    font-size: 18px;
+    color: rgb(225,225,225);
+    height: fit-content;
+}
+
+.active {
+    border-radius: 10px 10px;
+    background: linear-gradient(180deg, rgba(77, 27, 134, 0.94) 6.37%, #6A2D68 100%);
+    color: white;
+}
+.btnTime {
+    background-color: white;
+    outline: none;
+    border: none;
+    margin: 5px;
+    border-radius: 20px 20px;
+    padding: 2px 40px 2px 40px;
+}
+.btnTime p{
+    font-weight:bolder;
+}
