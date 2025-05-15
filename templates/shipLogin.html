@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Drug Inventory</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/2.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-truck-medical"></i>
+            <span>Drug Inventory</span>
+        </div>
+        <div class="action-buttons">
+           
+            <button class="btn btn-primary" onclick="openDialogViewOption()">
+                <i class="fas fa-warehouse"></i>View Orders</button>   
+                <button class="btn btn-outline" onclick="window.location.href='/'">
+                    <i class="fas fa-user"></i>
+                    User Login
+                </button>
+            <button class="btn btn-outline" onclick="window.location.href='/adminLogin'">
+                <i class="fas fa-user-shield"></i>
+                Admin Login
+            </button>
+            <button class="btn btn-active" onclick="window.location.href='#'">
+                <i class="fa-solid fa-truck"></i>
+                Shipment Login
+            </button>
+            <button class="btn btn-outline" onclick="window.location.href='/deliveryLogin'">
+                <i class="fa-solid fa-motorcycle"></i>
+                Delivery Login
+            </button>
+         
+        </div>
+    </header>
+
+    <!-- Search Bar -->
+    <div class="search-container" style="display: none;">
+        <div class="search-bar">
+            <input type="hidden" id="searchBar"   placeholder="Search orders by ID..." oninput="point(this)">
+            <i class="fas fa-search"></i>
+        </div>
+    </div>
+
+    <!-- Auth Container -->
+    <div class="auth-container" style="width: 100%;margin-top: 15%;">
+        <div class="auth-card" style="width: 100%;display: flex;">
+            <div class="auth-form" style="justify-content: center;width: 100%;">
+                <h2>Shipment Login In</h2>
+                <form action="{% url 'loginBtnAdmin' %}" method="post">
+                    <input type="hidden" name="typePoint" value="supplier">
+                   
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="text" class="form-control" placeholder="Email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" class="form-control" placeholder="Password" name="password" id="passwordSomething" required>
+                        <i class="fas fa-eye toggle-password" onclick="togglePassword('passwordSomething', this)" style="right: 15px; left: auto; cursor: pointer;"></i>
+                    </div>
+                    {% if message %}
+                    <script>
+                        window.onload = function () {
+                            var message = "{{message}}"
+                            messagePoint(message)
+                        }
+                    </script>
+                    {% endif %}
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;justify-content: center;">
+                        Sign In
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Sign Up Side -->
+            <div class="auth-side" style="display: none;">
+                <h3>Don't have an account?</h3>
+                <p>Join our Drug Inventory network to manage your medical orders efficiently.</p>
+                <button class="btn btn-outline" onclick="showSignUpForm()">
+                    <i class="fas fa-user-plus"></i>
+                    Sign Up
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sign Up Form (Hidden by default) -->
+    <div class="auth-container" id="signUpContainer" style="display: none;">
+        <div class="auth-card">
+            <!-- Sign Up Form -->
+            <div class="auth-form">
+                <h2>Create Account</h2>
+                <div class="form-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" class="form-control" placeholder="Full Name" id="name1" required>
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" class="form-control" placeholder="Email" id="mail1" required>
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-phone"></i>
+                    <input type="tel" class="form-control" placeholder="Mobile Number" id="mobile1" required>
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" class="form-control" placeholder="Password" id="passwordNothing" required>
+                    <i class="fas fa-eye toggle-password" onclick="togglePassword('passwordNothing', this)" style="right: 15px; left: auto; cursor: pointer;"></i>
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <textarea class="form-control" placeholder="Address" id="address1" required style="height: 80px; padding-top: 0.75rem;"></textarea>
+                </div>
+                <button class="btn btn-primary" id="signUpBtn" style="width: 100%;">
+                    Register
+                </button>
+            </div>
+            
+            <!-- Sign In Side -->
+            <div class="auth-side">
+                <h3>Already registered?</h3>
+                <p>Sign in to access your account and track your medical supplies.</p>
+                <button class="btn btn-outline" onclick="showSignInForm()">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Sign In
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Details Dialog -->
+    <div id="dialogBox" class="dialog">
+        <div class="dialog-content">
+            <div class="dialog-header">
+                <h3>Order Details</h3>
+                <button class="close-btn" onclick="closeDialog()">&times;</button>
+            </div>
+            <div class="dialog-body">
+                <div class="order-info">
+                    <img src="" class="order-image" id="imagePoint">
+                    <div class="order-details" id="orderDetails">
+                        <!-- Order details will be inserted here -->
+                    </div>
+                    <div class="order-track">
+                        <h4>Order Status</h4>
+                        <div class="track-steps">
+                            <div class="step" id="stepOrdered">
+                                <div class="step-indicator"></div>
+                                <span class="step-label">Ordered</span>
+                            </div>
+                            <div class="step" id="stepShipped">
+                                <div class="step-indicator"></div>
+                                <span class="step-label">Shipped</span>
+                            </div>
+                            <div class="step" id="stepInDelivery">
+                                <div class="step-indicator"></div>
+                                <span class="step-label">In Delivery</span>
+                            </div>
+                            <div class="step" id="stepDelivered">
+                                <div class="step-indicator"></div>
+                                <span class="step-label">Delivered</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dealers View -->
+    <div id="dealersView" class="dealers-view">
+        <div class="dealers-container">
+            <div class="dealers-header">
+                <h2>Medical Dealers</h2>
+                <button class="close-btn" onclick="closeDealersView()">&times;</button>
+            </div>
+            <div class="dealers-grid" id="listOfCard">
+            </div>
+        </div>
+    </div>
+
+    <div id="snackBar">message something</div>
+
+    <script>
+        // DOM Elements
+        const signUpContainer = document.getElementById('signUpContainer');
+        const signUpBtn = document.getElementById('signUpBtn');
+        const snackBar = document.getElementById('snackBar');
+        const dialogBox = document.getElementById('dialogBox');
+        const dealersView = document.getElementById('dealersView');
+        const searchBar = document.getElementById('searchBar');
+
+        function showSignUpForm() {
+            document.querySelector('.auth-container').style.display = 'none';
+            signUpContainer.style.display = 'flex';
+        }
+
+        // Show Sign In Form
+        function showSignInForm() {
+            signUpContainer.style.display = 'none';
+            document.querySelector('.auth-container').style.display = 'flex';
+        }
+
+        // Toggle Password Visibility
+        function togglePassword(inputId, icon) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        // Close Dialog
+        function closeDialog() {
+            dialogBox.style.display = 'none';
+        }
+
+        // Open Dealers View
+        function openDialogViewOption() {
+            const listOfCard = document.getElementById('listOfCard');
+            let html = '';
+            
+            fetch(`/searchOptionsView`)
+                .then(response => response.json())
+                .then(data => {
+                    data.data.forEach(dealer => {
+                        html += `
+                            <div class="dealer-card">
+                                <img src="${dealer.image}" class="dealer-image">
+                                <div class="dealer-info">
+                                    <h4>${dealer.name}</h4>
+                                    <p><b>Product:</b> ${dealer.pname || 'Medical Supplies'}</p>
+                                    <p><b>Qty:</b> ${dealer.qty}</p>
+                                    <p><b>Total:</b> ₹${dealer.total}/-</p>
+                                    <span class="dealer-status ${dealer.status === 'Delivered' ? 'status-delivered' : 'status-pending'}">
+                                        ${dealer.status}
+                                    </span>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    listOfCard.innerHTML = html;
+                    dealersView.style.display = 'flex';
+                })
+                .catch(error => {
+                    messagePoint('Error loading dealers data');
+                    console.error('Error:', error);
+                });
+        }
+
+        // Close Dealers View
+        function closeDealersView() {
+            dealersView.style.display = 'none';
+        }
+
+        // Show Message
+        function messagePoint(message) {
+            if (message !== "Success") {
+                var audio = new Audio('/static/sound/erro2.mp3');
+                audio.play();
+            }
+
+            snackBar.className = "show";
+            snackBar.innerText = message;
+            setTimeout(() => { 
+                snackBar.className = snackBar.className.replace("show", ""); 
+            }, 3000);
+        }
+
+        // Search Orders
+        function point() {
+            const searchValue = searchBar.value.trim();
+            if (searchValue.length === 0) {
+                dialogBox.style.display = 'none';
+                return;
+            }
+
+            fetch(`/searchOrder?search=${searchValue}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.data.length === 0) {
+                        document.getElementById('imagePoint').src = `https://img.freepik.com/free-vector/removing-goods-from-basket-refusing-purchase-changing-decision-item-deletion-emptying-trash-online-shopping-app-laptop-user-cartoon-character_335657-2566.jpg`;
+                        document.getElementById('orderDetails').innerHTML = `
+                            <p style="text-align: center; color: var(--danger-color);">No order found with ID: ${searchValue}</p>
+                        `;
+                    } else {
+                        const order = data.data[0];
+                        document.getElementById('imagePoint').src = order.image;
+                        
+                        let orderHtml = `
+                            <p><span>Order ID:</span> <span>${order.id}</span></p>
+                            <p><span>User Name:</span> <span>${order.name}</span></p>
+                            <p><span>Product:</span> <span>${order.pname}</span></p>
+                            <p><span>Quantity:</span> <span>${order.qty}</span></p>
+                            <p><span>Unit Price:</span> <span>₹${order.cost}/-</span></p>
+                            <p><span>Total Amount:</span> <span>₹${order.total}/-</span></p>
+                        `;
+                        document.getElementById('orderDetails').innerHTML = orderHtml;
+                        
+                        // Update status steps
+                        resetSteps();
+                        if (order.status === "Accepted") {
+                            document.getElementById('stepOrdered').classList.add('active');
+                        } else if (order.status === 'Shipped') {
+                            document.getElementById('stepOrdered').classList.add('active');
+                            document.getElementById('stepShipped').classList.add('active');
+                        } else if (order.status === 'In Delivery') {
+                            document.getElementById('stepOrdered').classList.add('active');
+                            document.getElementById('stepShipped').classList.add('active');
+                            document.getElementById('stepInDelivery').classList.add('active');
+                        } else if (order.status === 'Delivered') {
+                            document.getElementById('stepOrdered').classList.add('active');
+                            document.getElementById('stepShipped').classList.add('active');
+                            document.getElementById('stepInDelivery').classList.add('active');
+                            document.getElementById('stepDelivered').classList.add('active');
+                        }
+                    }
+                    dialogBox.style.display = 'flex';
+                })
+                .catch(error => {
+                    messagePoint('Error searching order');
+                    console.error('Error:', error);
+                });
+        }
+
+        // Reset status steps
+        function resetSteps() {
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.remove('active');
+            });
+        }
+
+        // Sign Up Functionality
+        signUpBtn.addEventListener('click', () => {
+            const name = document.getElementById('name1').value.trim();
+            const mail = document.getElementById('mail1').value.trim();
+            const mobile = document.getElementById('mobile1').value.trim();
+            const address = document.getElementById('address1').value.trim();
+            const password = document.getElementById('passwordNothing').value.trim();
+
+            if (!name) {
+                messagePoint("Please enter your name");
+                return;
+            }
+            if (!mail || !mail.includes('@')) {
+                messagePoint("Please enter a valid email address");
+                return;
+            }
+            if (!mobile || mobile.length < 10) {
+                messagePoint("Please enter a valid mobile number");
+                return;
+            }
+            if (!address) {
+                messagePoint("Please enter your address");
+                return;
+            }
+            if (!password || password.length < 6) {
+                messagePoint("Password must be at least 6 characters");
+                return;
+            }
+
+            // Clear form
+            document.getElementById('name1').value = "";
+            document.getElementById('mail1').value = "";
+            document.getElementById('mobile1').value = "";
+            document.getElementById('address1').value = "";
+            document.getElementById('passwordNothing').value = "";
+
+            fetch(`/signupSubmit/?email=${mail}&password=${password}&mobile=${mobile}&name=${name}&address=${address}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    messagePoint(data.message);
+                    if (data.message === 'Success') {
+                        showSignInForm();
+                    }
+                } else {
+                    messagePoint('Signup failed: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                messagePoint('An error occurred during signup.');
+            });
+        });
+
+        // Close dialogs when clicking outside
+        window.addEventListener('click', (event) => {
+            if (event.target === dialogBox) {
+                closeDialog();
+            }
+            if (event.target === dealersView) {
+                closeDealersView();
+            }
+        });
+    </script>
+</body>
+</html>

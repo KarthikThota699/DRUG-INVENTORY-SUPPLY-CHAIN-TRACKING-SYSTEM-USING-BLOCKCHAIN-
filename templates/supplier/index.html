@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <title>Supply Chain Management</title>
+  <style>
+    :root {
+      --primary-color: #c54f66;
+      --secondary-color: #2a2a2a;
+      --dark-bg: #1a1a1a;
+      --light-text: #ffffff;
+      --card-bg: rgba(42, 42, 42, 0.5);
+      --success-color: #4CAF50;
+      --warning-color: #FFC107;
+      --info-color: #2196F3;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      user-select: none;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(https://i1.wp.com/trakti.com/wp-content/uploads/2022/02/Article-75-Guide-to-Supplier-onboarding-and-qualification-scaled.jpg?fit=2560%2C1461&ssl=1);
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: var(--light-text);
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 5%;
+      background-color: var(--secondary-color);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 700;
+      text-decoration: none;
+      color: var(--light-text);
+      transition: color 0.3s;
+    }
+
+    .logo:hover {
+      color: var(--primary-color);
+    }
+
+    .divNav {
+      display: flex;
+      gap: 20px;
+    }
+
+    .divNav a {
+      color: var(--light-text);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 8px 15px;
+      border-radius: 5px;
+      transition: all 0.3s;
+    }
+
+    .divNav a.active {
+      background-color: var(--primary-color);
+    }
+
+    .divNav a:hover:not(.active) {
+      color: var(--primary-color);
+    }
+
+    .page-title {
+      font-size: 2.5rem;
+      margin: 20px 5%;
+      color: var(--light-text);
+    }
+
+    .page-subtitle {
+      font-size: 1rem;
+      margin: 0 5% 20px;
+      color: var(--primary-color);
+    }
+
+    .card-container {
+      margin: 20px 5%;
+      padding: 20px;
+      background-color: var(--card-bg);
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      max-height: 600px;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    .card-grid::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .card-grid::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+    }
+
+    .card-grid::-webkit-scrollbar-thumb {
+      background: var(--primary-color);
+      border-radius: 10px;
+    }
+
+    .product-card {
+      background-color: var(--secondary-color);
+      border-radius: 15px;
+      padding: 20px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .product-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      cursor: pointer;
+    }
+
+    .product-name {
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: var(--primary-color);
+      margin: 0;
+    }
+
+    .toggle-details {
+      color: var(--light-text);
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .toggle-details.active {
+      transform: rotate(180deg);
+    }
+
+    .product-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+      margin-bottom: 15px;
+    }
+
+    .product-details.show {
+      max-height: 200px;
+    }
+
+    .detail-item {
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+
+    .detail-label {
+      font-weight: 500;
+      color: var(--primary-color);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      background-color: var(--primary-color);
+    }
+
+    .product-message {
+      color: var(--warning-color);
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      font-style: italic;
+    }
+
+    .product-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .status-controls {
+      margin-top: 20px;
+    }
+
+    .status-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+    }
+
+    .status-option {
+      display: none;
+    }
+
+    .status-label {
+      flex: 1;
+      min-width: 80px;
+      text-align: center;
+      padding: 8px 10px;
+      border-radius: 8px;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: var(--light-text);
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 0.8rem;
+      border: 1px solid transparent;
+    }
+
+    .status-option:checked + .status-label {
+      background-color: var(--primary-color);
+      font-weight: 600;
+      border-color: var(--light-text);
+    }
+
+    .status-label.accepted {
+      background-color: rgba(76, 175, 80, 0.2);
+    }
+
+    .status-label.shipped {
+      background-color: rgba(33, 150, 243, 0.2);
+    }
+
+    .status-label.in-delivery {
+      background-color: rgba(255, 193, 7, 0.2);
+    }
+
+    .status-label.delivered {
+      background-color: rgba(139, 195, 74, 0.2);
+    }
+
+    .status-option:checked + .status-label.accepted {
+      background-color: var(--success-color);
+    }
+
+    .status-option:checked + .status-label.shipped {
+      background-color: var(--info-color);
+    }
+
+    .status-option:checked + .status-label.in-delivery {
+      background-color: var(--warning-color);
+      color: #000;
+    }
+
+    .status-option:checked + .status-label.delivered {
+      background-color: #8BC34A;
+    }
+
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 25px;
+      background-color: var(--success-color);
+      color: white;
+      border-radius: 5px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+      transform: translateX(200%);
+      transition: transform 0.3s ease-out;
+      z-index: 1000;
+    }
+
+    .notification.show {
+      transform: translateX(0);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px;
+      grid-column: 1 / -1;
+    }
+
+    .empty-icon {
+      font-size: 3rem;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      header {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .divNav {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    /* Animation for status change */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .status-updated {
+      animation: pulse 0.5s ease-in-out;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Preloader -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <a href="{% url 'Index' %}" class="logo">
+      Supply Chain Management
+    </a>
+    <div class="divNav">
+      <a href="/" class="active"><i class="fas fa-shopping-cart"></i> Cart</a>
+      <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <h1 class="page-title">Supplier Dashboard</h1>
+    <p class="page-subtitle">Manage your product orders and shipments</p>
+    
+    <div class="card-container">
+      <div class="card-grid">
+        {% if products %}
+          {% for use in products %}
+          <div class="product-card">
+            <div class="product-header">
+              <h3 class="product-name">{{ use.pname }}</h3>
+              <button class="toggle-details">
+                <i class="fas fa-chevron-down"></i>
+              </button>
+            </div>
+            
+            <div class="product-details">
+              <div class="detail-item">
+                <span class="detail-label">Customer:</span> {{ use.name }}
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Contact:</span> {{ use.mobile }}
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Email:</span> {{ use.email }}
+              </div>
+              <div class="detail-item">
+                <span class="detail-label">Address:</span> 
+                <small>{{ use.addresses }}</small>
+              </div>
+            </div>
+            
+            <img src="{{ use.image }}" alt="{{ use.pname }}" class="product-image">
+            
+            {% if use.message %}
+              <div class="product-message">
+                <i class="fas fa-exclamation-circle"></i> {{ use.message }}
+              </div>
+            {% endif %}
+            
+            <div class="product-info">
+              <div>
+                <span class="detail-label">Qty:</span> {{ use.qty }}
+              </div>
+              <div>
+                <span class="detail-label">Unit Cost:</span> ₹{{ use.cost }}
+              </div>
+              <div>
+                <span class="detail-label">Total:</span> ₹{{ use.total }}
+              </div>
+             
+            </div>
+            <div class="status-controls">
+              <p class="detail-label">Payment Mode:</p>
+              {{ use.stateOFPurchase }}  
+            </div>
+            <div class="status-controls">
+              <p class="detail-label">Update Status:</p>
+              {%if use.point == "Not" %}
+              <div class="status-options">
+                <input type="radio" id="Ordered-{{ use.id }}" name="status-{{ use.id }}" value="Accepted" class="status-option">
+                <label for="Ordered-{{ use.id }}" class="status-label accepted" onclick="updateOrder(this, '{{ use.qty }}', '{{ use.imageId }}', '{{ use.id }}', 'Accepted')">
+                  <i class="fas fa-check"></i> Accepted
+                </label>
+                
+                <input type="radio" id="Shipped-{{ use.id }}" name="status-{{ use.id }}" value="Shipped" class="status-option">
+                <label for="Shipped-{{ use.id }}" class="status-label shipped" onclick="updateOrder(this, '{{ use.qty }}', '{{ use.imageId }}', '{{ use.id }}', 'Shipped')">
+                  <i class="fas fa-shipping-fast"></i> Shipped
+                </label>
+                
+            
+              </div>
+              {% else %}
+              User Cancelled order
+              {% endif %}
+            </div>
+            
+            <script>
+              document.addEventListener('DOMContentLoaded', function() {
+                setStatus('{{ use.status }}', '{{ use.id }}');
+              });
+            </script>
+          </div>
+          {% endfor %}
+        {% else %}
+          <div class="empty-state">
+            <div class="empty-icon">
+              <i class="fas fa-box-open"></i>
+            </div>
+            <h3>No Orders Found</h3>
+            <p>You don't have any orders to manage at this time.</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    
+    {% if message %}
+      <div class="notification" id="messageNotification">
+        {{ message }}
+      </div>
+    {% endif %}
+  </main>
+
+  <script>
+       const productStatus = {};
+
+// Initialize product statuses
+document.addEventListener('DOMContentLoaded', function() {
+    {% for use in products %}
+        productStatus['{{ use.id }}'] = '{{ use.status }}';
+        setStatus('{{ use.status }}', '{{ use.id }}');
+    {% endfor %}
+});
+
+// Toggle product details
+document.querySelectorAll('.toggle-details').forEach(button => {
+    button.addEventListener('click', function() {
+        const details = this.closest('.product-card').querySelector('.product-details');
+        details.classList.toggle('show');
+        this.classList.toggle('active');
+    });
+});
+
+// Set initial status for each product
+function setStatus(status, id) {
+    const radio = document.querySelector(`input[value="${status}"][name="status-${id}"]`);
+    if (radio) {
+        radio.checked = true;
+    }
+}
+
+// Update order status
+function updateOrder(element, qty, imageId, id, status) {
+    // Store the current status before making the change
+    const previousStatus = productStatus[id];
+    
+    // Optimistically update the UI
+    productStatus[id] = status;
+    setStatus(status, id);
+    
+    fetch(`/submitUpdate?imageId=${imageId}&qty=${qty}&id=${id}&status=${status}`, {
+        method: 'GET'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.message && data.message.includes('In Sufficient Qty')) {
+            // Revert to previous status if insufficient quantity
+            showNotification(data.message, 'error');
+            productStatus[id] = previousStatus;
+            setStatus(previousStatus, id);
+        } else {
+            showNotification(data.message || 'Status updated successfully');
+            
+            // Add visual feedback
+            const card = element.closest('.product-card');
+            card.classList.add('status-updated');
+            setTimeout(() => {
+                card.classList.remove('status-updated');
+            }, 500);
+        }
+    })
+    .catch(error => {
+        // Revert to previous status on error
+        showNotification('Error updating status', 'error');
+        productStatus[id] = previousStatus;
+        setStatus(previousStatus, id);
+        console.error('Error:', error);
+    });
+}
+
+// Show notification
+function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 10);
+    
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 3000);
+}
+
+// Show any existing message notification
+document.addEventListener('DOMContentLoaded', function() {
+    const messageNotification = document.getElementById('messageNotification');
+    if (messageNotification) {
+        setTimeout(() => {
+            messageNotification.classList.add('show');
+        }, 10);
+        
+        setTimeout(() => {
+            messageNotification.classList.remove('show');
+            setTimeout(() => {
+                messageNotification.remove();
+            }, 300);
+        }, 3000);
+    }
+});
+
+// Preloader
+window.addEventListener('load', function() {
+    const preloader = document.getElementById('js-preloader');
+    if (preloader) {
+        preloader.style.opacity = '0';
+        setTimeout(() => {
+            preloader.style.display = 'none';
+        }, 300);
+    }
+});
+  </script>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/static/vendor/jquery/jquery.min.js"></script>
+  <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="/static/assets/js/isotope.min.js"></script>
+  <script src="/static/assets/js/owl-carousel.js"></script>
+  <script src="/static/assets/js/tabs.js"></script>
+  <script src="/static/assets/js/popup.js"></script>
+  <script src="/static/assets/js/custom.js"></script>
+</body>
+
+</html>

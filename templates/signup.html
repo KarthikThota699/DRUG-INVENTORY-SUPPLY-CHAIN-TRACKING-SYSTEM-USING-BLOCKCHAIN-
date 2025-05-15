@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supply Chain</title>
+</head>
+<link rel="stylesheet" href="/static/css/index.css">
+
+<body>
+    <button onclick="playAudio()"></button>
+
+    <div class="centerConfig">
+
+        <div class="loginCard">
+            <form method="post" action="{%url 'signupSubmit'%}">
+                {% csrf_token %}
+
+                <p style="font-size: 25px;margin-bottom: 10px;margin-top: 10px;">Sign up</p>
+                <div class="fieldSet">
+                    <p>Name</p>
+                    <input type="text" placeholder="Jhone Doe" name="name" value="{{ name }}" required>
+                </div>
+
+                <div class="fieldSet">
+                    <p>Email</p>
+                    <input type="text" placeholder="User@gmail.com" name="email" value="{{ email }}" required>
+                    <small style="color: red;font-weight: bold;">
+                        {{message}}</small>
+                </div>
+                <div class="fieldSet">
+                    <p>Mobile Number</p>
+                    <input type="number" placeholder="Mobile" maxlength="10" name="mobile" value="{{ mobile }}"
+                        required>
+                </div>
+                <div class="fieldSet">
+                    <p>Address</p>
+                    <input type="text" placeholder="Address" style="height: 25px;" name="address" value="{{ address }}" required>
+                </div>
+                <div class="fieldSet">
+                    <p>Password</p>
+                    <input type="password" placeholder="Password" name="password" value="{{ password }}" required>
+                </div>
+
+                <button class="btn" type="submit">
+                    Sign up
+                </button>
+                <p class="refer">Don't have an account &nbsp;<a onclick="history.back()">Sign in</a></p>
+            </form>
+        </div>
+    </div>
+ 
+
+</body>
+
+</html>

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | {{name}}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(https://capturly.com/blog/wp-content/uploads/2018/01/eCommerce-website-search-customer-experience.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .checkout-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .checkout-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .checkout-header h2 {
+            font-size: 24px;
+            margin: 0;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .product-image {
+            display: block;
+            margin: 0 auto 20px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.2);
+            margin: 20px 0;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+
+        .detail-label {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .detail-value {
+            font-size: 16px;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .qty-control {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .qty-btn {
+            background-color: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .qty-btn:hover {
+            background-color: #fff;
+            transform: scale(1.1);
+        }
+
+        .qty-display {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 5px 15px;
+            margin: 0 10px;
+            color: #000;
+            font-weight: 500;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .payment-options {
+            margin: 25px 0;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-method:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .payment-method.selected {
+            background: rgba(77, 27, 134, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .payment-icon {
+            margin-right: 15px;
+            font-size: 20px;
+            color: #fff;
+        }
+
+        .payment-label {
+            flex-grow: 1;
+        }
+
+        .payment-radio {
+            accent-color: #6A2D68;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #6A2D68, #4D1B86);
+            color: white;
+            box-shadow: 0 4px 15px rgba(106, 45, 104, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(106, 45, 104, 0.6);
+        }
+
+        .btn-primary:disabled {
+            background: #ccc;
+            transform: none;
+            box-shadow: none;
+            cursor: not-allowed;
+        }
+
+        .btn-icon {
+            margin-right: 8px;
+        }
+
+        .total-amount {
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        #cost {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="checkout-card">
+            <div class="checkout-header">
+                <h2>Checkout</h2>
+            </div>
+            
+            <img class="product-image" src="{{image}}" alt="{{name}}">
+            
+            <div class="divider"></div>
+            
+            <p id="cost">{{cost}}</p>
+            
+            <div class="detail-row">
+                <span class="detail-label">Product Name</span>
+                <span class="detail-value">{{name}}</span>
+            </div>
+            
+            <div class="detail-row">
+                <span class="detail-label">Price</span>
+                <span class="detail-value">₹ {{cost}}/-</span>
+            </div>
+            
+            <div class="detail-row">
+                <span class="detail-label">Quantity</span>
+                <div class="qty-control">
+                    <button class="qty-btn" id="Decreament">-</button>
+                    <span class="qty-display" id="result">0</span>
+                    <button class="qty-btn" id="increament">+</button>
+                </div>
+            </div>
+            
+            <div class="divider"></div>
+            
+            <div class="detail-row">
+                <span class="detail-label">Total Amount</span>
+                <span class="detail-value total-amount" id="Total">₹ 0 /-</span>
+            </div>
+            
+            <div class="payment-options">
+                <h3 style="margin-bottom: 15px; font-size: 18px;">Payment Method</h3>
+                
+                <div class="payment-method" id="codMethod">
+                    <i class="fas fa-money-bill-wave payment-icon"></i>
+                    <span class="payment-label">Cash on Delivery</span>
+                    <input type="radio" name="paymentMethod" class="payment-radio" value="cod" checked>
+                </div>
+                
+                <div class="payment-method" id="onlineMethod">
+                    <i class="fas fa-credit-card payment-icon"></i>
+                    <span class="payment-label">Online Payment</span>
+                    <input type="radio" name="paymentMethod" class="payment-radio" value="online">
+                </div>
+            </div>
+            
+            <form action="{% url 'submit' %}" method="post">
+                {% csrf_token %}
+                <input name="pname" value="{{name}}" type="hidden"/>
+                <input name="imageId" value="{{imageId}}" type="hidden"/>
+                <input id="getQty" name="qty" value="0" type="hidden"/>
+                <input name="cost" value="{{cost}}" type="hidden"/>
+                <input id="totalPoint" name="total" value="0" type="hidden"/>
+                <input id="paymentMethod" name="paymentMethod" value="cod" type="hidden"/>
+                
+                <button id="Submit" class="btn btn-primary" type="submit" disabled>
+                    <i class="fas fa-shopping-bag btn-icon"></i> Place Order
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let quantity = 0;
+        const quantityDisplay = document.getElementById("result");
+        const costElement = document.getElementById("cost");
+        const totalDisplay = document.getElementById("Total");
+        const submitButton = document.getElementById("Submit");
+        const quantityInput = document.getElementById("getQty");
+        const totalInput = document.getElementById("totalPoint");
+        const paymentMethodInput = document.getElementById("paymentMethod");
+        
+        // Payment method selection
+        const codMethod = document.getElementById("codMethod");
+        const onlineMethod = document.getElementById("onlineMethod");
+        
+        // Set up payment method selection
+        document.querySelectorAll('.payment-method').forEach(method => {
+            method.addEventListener('click', function() {
+                // Remove selected class from all methods
+                document.querySelectorAll('.payment-method').forEach(m => {
+                    m.classList.remove('selected');
+                });
+                
+                // Add selected class to clicked method
+                this.classList.add('selected');
+                
+                // Update the hidden input value
+                const radio = this.querySelector('.payment-radio');
+                paymentMethodInput.value = radio.value;
+                radio.checked = true;
+            });
+        });
+        
+        // Initialize with COD selected
+        codMethod.classList.add('selected');
+        
+        // Quantity increment
+        document.getElementById("increament").addEventListener('click', function() {
+            quantity++;
+            updateQuantity();
+        });
+        
+        // Quantity decrement
+        document.getElementById("Decreament").addEventListener('click', function() {
+            if (quantity > 0) {
+                quantity--;
+                updateQuantity();
+            }
+        });
+        
+        function updateQuantity() {
+            quantityDisplay.textContent = quantity;
+            quantityInput.value = quantity;
+            
+            const cost = parseFloat(costElement.textContent);
+            const total = cost * quantity;
+            totalInput.value = total;
+            
+            totalDisplay.textContent = `₹ ${total.toFixed(2)} /-`;
+            
+            // Enable/disable submit button based on quantity
+            if (quantity > 0) {
+                submitButton.disabled = false;
+            } else {
+                submitButton.disabled = true;
+            }
+        }
+        
+        // Initialize
+        updateQuantity();
+    </script>
+</body>
+
+</html>

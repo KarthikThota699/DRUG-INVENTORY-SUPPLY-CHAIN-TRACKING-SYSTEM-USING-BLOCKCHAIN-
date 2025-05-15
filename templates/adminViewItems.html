@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <title>Supply Chain</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/static/css/custom.css">
+  <!--
+
+TemplateMo 579 Cyborg Gaming
+
+https://templatemo.com/tm-579-cyborg-gaming
+
+-->
+</head>
+
+<body>
+  <style>
+    body {
+      user-select: none;
+      height: 100vh;
+      background-image: linear-gradient(#000000cc,#000000d3),url(http://images.theconversation.com/files/369567/original/file-20201116-23-18wlnv.jpg?ixlib=rb-4.1.0&q=45&auto=format&w=1356&h=668&fit=crop);
+      -webkit-user-select: none;
+      -moz-user-select: none;  }
+
+    .containerFor {
+      width: 100%;
+      padding-top: 5%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .containerFor img {
+      width: 80px;
+      border-radius: 20px;
+      height: 80px;
+      align-items: center;
+      justify-self: center;
+      padding: 1.9%;
+      background-color: antiquewhite;
+      margin: 3px;
+    }
+
+    .card {
+      scroll-behavior: smooth;
+      scroll-margin: 0px;
+      overflow: auto;
+      width: fit-content;
+      padding: 2.9%;
+      height: 500px;
+      margin-top: 5px;
+      background: linear-gradient(180deg, rgba(77, 27, 134, 0.94) 6.37%, #6A2D68 100%);
+      padding: 0.9%;
+      box-shadow: #312f30;
+      border-radius: 2%;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-row: auto;
+      gap: 10px;
+      flex-direction: row;
+      border-radius: 2%;
+      border: #4a4647;
+      border-color: white;
+    }
+
+    .card::-webkit-scrollbar {
+      display: none;
+    }
+
+    .viewCard td,
+    th {
+      align-items: center;
+      justify-content: center;
+      justify-items: center;
+      text-align: center;
+      border: 5px solid rgb(254, 254, 254);
+      border-width: 1px;
+      color: white;
+    }
+
+    .fieldSet p {
+      color: black;
+    }
+
+    #imageControll {
+      background-color: black;
+      color: #c54f66;
+      border: #c54f66;
+      border-radius: 10px;
+      cursor: pointer;
+      display: inline-block;
+      outline-color: #c54f66;
+      outline: #c54f66;
+    }
+
+    .viewCard {
+      border-radius: 5%;
+      margin: 10px;
+      display: inline;
+      height: fit-content;
+      justify-content: center;
+      justify-self: center;
+      padding: 1.9%;
+      align-items: center;
+      background: linear-gradient(180deg, rgba(192, 153, 237, 0.631) 6.37%, #b059ad62 100%);
+      width: 250px;
+      transition: 0.3s;
+    }
+
+    .viewCard:hover {
+      margin: 5%;
+    }
+
+
+
+    .viewCard img {
+      display: flex;
+      align-items: center;
+      justify-self: center;
+      justify-content: center;
+      justify-items: center;
+
+    }
+
+    .btn {
+      color: white;
+      background-color: black;
+    }
+
+    small {
+      color: red;
+    }
+
+    .dialog-box-overLay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgb(0, 0, 0, 0.2);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .custom-dialog {
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      text-align: center;
+      width: 330px;
+    }
+
+    a {
+      color: white;
+    }
+
+    .dialog-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .dialog-box {
+      background-color: white;
+      border-radius: 5px;
+
+      text-align: center;
+      width: 300px;
+    }
+
+    .dialog-buttons {
+      margin-top: 10px;
+    }
+
+    .dialog-buttons button {
+      margin: 0 10px;
+    }
+
+    p {
+      margin: 5px;
+      color: white;
+    }
+
+    .cardPoint {
+      display: flex;
+      justify-self: center;
+      background: linear-gradient(180deg, rgba(192, 153, 237, 0.631) 6.37%, #b059ad62 100%);
+      padding: 1.5%;
+      border: #312f30;
+      border-radius: 10px 10px;
+    }
+  </style>
+
+  <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <div class="dialog-overlay" id="customDialog">
+    <div class="cardPoint">
+      <div class="iamin">
+        <div style="justify-content: end;display: flex;">
+          <button onclick="closeDialog()"
+            style="width: fit-content;background-color: #c54f66;border: none;border-radius: 10px 10px;padding: 10px 20px;color: white ;">Close
+            <b>X</b></button>
+        </div>
+
+        <form action="{% url 'updateQty' %}" method="post">
+
+          {%csrf_token%}
+          <input type="hidden" name="state" id="statePoint">
+          <p id="nameId" style="font-size: 20px;"></p>
+          <p id="qtyId"></p>
+          <input type="hidden" id="idClass" name="idPoint" />
+          <input type="number" name="qty" id="textpoint" />
+          <div style="display: flex;justify-content: end;">
+            <button onclick="confirmAction()" type="submit"
+              style="padding: 10px 20px;border: none;border-radius: 20px 20px;background: #000;color: white;margin-top: 20px;margin-bottom: 5px;">Update</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
+  <header>
+    <a href="{%url 'Index'%}"
+      style="color: white;outline: none; border: none;text-decoration: none;font-size: 35px;font-weight: bolder;margin: 10px;"
+      class="logo">
+      <p style="color: white;margin: 0px;">Supply Chain</p>
+    </a>
+    <div class="divNav" style="display: flex;justify-content: end;width: 90%;padding: 20px;">
+
+      <a href="{%url 'Index' %}">Add Products</a>
+      <a class="active" href="{%url 'viewItems' %}">Items</a>
+      <a href="{%url 'adminCart' %}">Cart</a>
+      <a href="{%url 'logout' %}">Logout</a>
+    </div>
+  </header>
+  <!-- ***** Header Area Start ***** -->
+
+  <p style="margin-left: 22px;color: #c54f66;font-weight: bold;"></p>
+
+
+  {%if products %}
+  <div class="containerFor">
+    <div class="card">
+      {%for use in products%}
+      <div class="viewCard">
+        <!-- <img src="data:image/jpeg;base64,{{ use.image }}" alt="Nothing"> -->
+        <img src="{{ use.image }}" alt="{{ use.name }}" style="margin: 6%;">
+        <table style="width: 100%">
+          <th>Particulars</th>
+          <th>Details</th>
+          <tr>
+            <td>
+              Name
+            </td>
+            <td>
+              <p>{{use.name}}</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Qty
+            </td>
+            <td>
+              <p>{{use.qty}}</p>
+
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Cost
+            </td>
+            <td>
+              <p>{{use.cost}}</p>
+            </td>
+          </tr>
+
+        </table>
+        <input type="hidden" id="qty" value="{{use.qty}}" />
+        <input type="hidden" id="id" value="{{use.id}}" />
+        <div style="display: flex;justify-content: center; padding: 10px;background-color: transparent;">
+          <button onclick="openWithContent('{{use.name}}','{{use.qty}}','{{use.cost}}','{{use.id}}','Increament')"
+            class="btnTime">
+            <img src="/static/img/plus.svg" style="width: 20px;height: 20px;background: black;" /></button>
+          <button onclick="openWithContent('{{use.name}}','{{use.qty}}','{{use.cost}}','{{use.id}}','Decreament')"
+            class="btnTime"><img src="/static/img/minus.svg"
+              style="width: 20px;height: 20px;background: black;" /></button>
+        </div>
+
+      </div>
+
+      {%endfor%}
+
+    </div>
+   
+</div>
+{% endif %}
+
+
+    
+
+    <script>
+      function openDialog() {
+        document.getElementById('customDialog').style.display = 'flex';
+      }
+
+      function closeDialog() {
+        document.getElementById('customDialog').style.display = 'none';
+      }
+
+      function confirmAction() {
+        document.getElementById('customDialog').style.display = 'none';
+        closeDialog();
+      }
+      function openWithContent(name, qty, cost, id, values) {
+        // alert(id)
+        document.getElementById('statePoint').value = values
+        document.getElementById("idClass").value = id
+        document.getElementById("nameId").innerText = name
+        document.getElementById("qtyId").innerHTML = "<b>Current Qty</b> :" + qty
+        openDialog()
+
+      }
+    </script>
+     {%if message%}
+
+     <div id="snackBar">{{message}}</div>
+     <script>
+       var snack = document.getElementById('snackBar')
+       window.onload = () => {
+         snack.className="show"
+         setTimeout(()=>{snack.className=snack.className.replace("show","")},3000)
+       }
+     </script>
+     {% endif %}
+
+    <!-- Scripts -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="/static/assets/js/isotope.min.js"></script>
+    <script src="/static/assets/js/owl-carousel.js"></script>
+    <script src="/static/assets/js/tabs.js"></script>
+    <script src="/static/assets/js/popup.js"></script>
+    <script src="/static/assets/js/custom.js"></script>
+
+
+</body>
+
+</html>

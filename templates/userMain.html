@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <title>Drug Inventory</title>
+
+  <link rel="stylesheet" href="/static/css/custom.css">
+
+</head>
+
+<body>
+  <style>
+    body {
+            background-image: linear-gradient(#00000088,#00000081), url(https://shipsy.io/wp-content/uploads/2021/06/Blog-91.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100vh;
+            
+    }
+
+    .card2 {
+      margin-top: 10px;
+      background: linear-gradient(180deg, rgba(77, 27, 134, 0.94) 6.37%, #6A2D68 100%);
+      padding: 1%;
+      border-radius: 20px 20px;
+      margin-right: 5%;
+      margin-left: 5%;
+      display: grid;
+      border: #c54f66;
+      border-color: white;
+      grid-template-columns: repeat(8, 1fr);
+    }
+
+    .myMagic {
+      margin-top: 10px;
+      background: linear-gradient(180deg, rgba(77, 27, 134, 0.94) 6.37%, #6A2D68 100%);
+      padding: 1%;
+      border-radius: 20px 20px;
+      margin-right: 5%;
+      margin-left: 5%;
+      display: none;
+      border: #c54f66;
+      border-color: white;
+      grid-template-columns: repeat(8, 1fr);
+    }
+
+    .inside {
+      border-radius: 10px 10px;
+      padding: 2%;
+      display: flex;
+      align-content: center;
+      justify-content: center;
+      align-items: center;
+      width: auto;
+      animation-delay: 1ms;
+      transition: all 0.5s ease;
+      z-index: 0;
+      margin: 2px;
+      background-color: #ffffff7f;
+    }
+
+    .inside img {
+      padding: 2.3px;
+      border-radius: 10px 10px;
+      display: flex;
+      justify-self: center;
+      justify-content: center;
+    }
+
+    .inside::before {
+      top: 0;
+      animation: flow 0.5s ease-in-out forwards;
+    }
+
+    @keyframes flow {
+      0% {
+        top: -100%;
+      }
+
+      100% {
+        top: 100%;
+      }
+    }
+
+    .inside:hover {
+      background-color: #abc6eb;
+    }
+
+    .inside p {
+      margin: 1px;
+      padding-left: 5px;
+    }
+
+    input[type='search']::-webkit-input-placeholder {
+      color: white;
+    }
+
+    input[type='search']::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+      color: white;
+      filter: invert(100%) sepia(100%);
+      width: 24px;
+      height: 24px;
+      background-image: url(/static/img/cross.svg);
+    }
+
+    .visible {
+      opacity: 0;
+      width: 0px;
+      color: white;
+      display: none;
+      background: transparent;
+      padding: 20px;
+      margin: 0px;
+      visibility: hidden;
+      transition: opacity 10s ease, visibility 0s 0.5s;
+    }
+
+    .visible.show {
+      opacity: 1;
+      visibility: visible;
+      width: 500px;
+      color: white;
+      background: transparent;
+      padding: 20px;
+      margin: 0px;
+      transition: 10s ease-in-out;
+    }
+  </style>
+
+  <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
+
+  <!-- ***** Header Area Start ***** -->
+  <header>
+    <a href="{%url 'Index'%}"
+      style="outline: none; border: none;text-decoration: none;font-size: 35px;font-weight: bolder;margin: 10px;"
+      class="logo">
+      <p> Drug Inventory </p>
+    </a>
+
+    <div class="divNav" style="display: flex;justify-content: end;width: 90%;padding: 20px;">
+
+      <a href="{%url 'Index' %}" class="active">View Products</a>
+      <a href="{%url 'UserHistory' %}">History</a>
+      <a href="{%url 'profile' %}">Profile</a>
+      <a href="{%url 'logout' %}">Logout</a>
+    </div>
+  </header>
+  <p style="margin-left: 22px;color: #c54f66;font-weight: bold;"></p>
+
+
+
+
+
+  {%if message %}
+
+
+  <div style="width: 100%;justify-content: center;display:flex;padding-top: 5%;">
+    <div
+      style="display: flex;justify-content: center;width: 60%; padding: 100px 30px;
+      background-image: linear-gradient(180deg, rgba(77, 27, 134, 0.94) 6.37%, #6A2D68 100%);border-radius: 20px 20px;">
+      <img src="/static/img/no data.png" style="filter: brightness(0) invert(1);" />
+    </div>
+  </div>
+
+  {%else%}
+
+
+  <div class="containerFor">
+    <div style="display: flex;justify-content: start;margin-left: 90px;">
+      <div
+        style="display: flex;justify-content: center;background: linear-gradient(180deg, rgba(77, 27, 134, 0.94) 6.37%, #6A2D68 100%);border-radius: 20px 20px;padding: 5px;width: 550px;height: 100%;">
+        <img src="/static/img/search.svg"
+          style="color: white;filter: invert(1);padding: 0px;margin: 0px;object-fit: none;" class="clickPoint"
+          onclick="mything()">
+        <input id="searchPoint" class="visible.show" type="search"
+          style="width: 500px;color: white; background: transparent;padding: 20px;margin: 0px;outline: none;border: none;"
+          placeholder="Search your best Products" oninput="myfunction(this)">
+      </div>
+    </div>
+    <div class="card" id="card">
+      <div class="card2" id="card2">
+        {%for use in products%}
+        <div class="inside" onclick="submit(this)">
+          <form action="{%url 'Checkout'%}" method="post">
+            {%csrf_token %}
+            <img src="{{use.image }}" style="height: 120px;width: 120px;">
+            <input type="hidden" name="name" value="{{use.name}}">
+            <input type="hidden" name="cost" value="{{use.cost}}">
+            <input type="hidden" name="qty" value="{{use.qty}}">
+            <input type="hidden" name="image" value="{{use.image}}">
+            <input type="hidden" name="id" value="{{use.id}}">
+            <input type="hidden" name="imageId" value="{{use.imageId}}" />
+
+            <p style="font-size: 25px;">{{ use.name }}</p>
+            <p style="font-size: 20px;">₹ {{ use.cost }} /-</p>
+            <p style="font-size: 12px;"><b style="color: black  ;">Stock-In: </b>&nbsp;{{ use.qty }}</p>
+
+          </form>
+        </div>
+        {% endfor %}
+
+      </div>
+      <div class="myMagic" id="myMagic">
+
+      </div>
+
+
+
+    </div>
+    {% endif %}
+
+
+    <input type="hidden" id="csrf" value="{{csrf_token}}">
+
+    <script>
+      function submit(element) {
+        const form = element.querySelector('form');
+        if (form) {
+          form.submit()
+        }
+      }
+
+      function mything() {
+        var search = document.getElementById('searchPoint')
+
+        if (search.className == 'visible') {
+          search.classList.toggle('.show')
+        } else {
+          search.classList.toggle('visible')
+        }
+      }
+
+
+      function myfunction(box) {
+        const value = box.value
+        if (value.length <= 0) {
+          document.getElementById('card2').style.display = 'grid'
+          document.getElementById('myMagic').style.display = 'none'
+        } else {
+
+          fetch(`/search?search=${box.value}`)
+            .then(response =>
+              
+            response.json()
+              
+            ).then(myVew => {
+                      document.getElementById('card2').style.display = 'none'
+          document.getElementById('myMagic').style.display = 'grid'
+              myVew.data.forEach(item => {
+                document.getElementById('myMagic').innerHTML =
+                  ` <div class="inside" onclick="submit(this)">
+          <form action="{%url 'Checkout'%}" method="post">
+            {%csrf_token %}
+            <img src="${item.image}" style="height: 120px;width: 120px;">
+            <input type="hidden" name="name" value="${item.name}">
+            <input type="hidden" name="cost" value="${item.cost}">
+            <input type="hidden" name="qty" value="${item.qty}">
+            <input type="hidden" name="image" value="${item.image}">
+            <input type="hidden" name="id" value="${item.id}">
+            <input type="hidden" name="imageId" value="${item.imageId}" />
+
+            <p style="font-size: 25px;">${item.name}</p>
+            <p style="font-size: 20px;">₹ ${item.cost} /-</p>
+            <p style="font-size: 12px;"><b style="color: black  ;">Stock: </b>&nbsp;${item.qty}</p>
+          </form>
+        </div>`
+              })
+            })
+
+        }
+      }
+
+
+
+    </script>
+    <!-- Scripts -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="/static/assets/js/isotope.min.js"></script>
+    <script src="/static/assets/js/owl-carousel.js"></script>
+    <script src="/static/assets/js/tabs.js"></script>
+    <script src="/static/assets/js/popup.js"></script>
+    <script src="/static/assets/js/custom.js"></script>
+
+
+</body>
+
+</html>

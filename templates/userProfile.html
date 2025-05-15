@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <title>Supply Chain</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/custom.css" rel="stylesheet">
+
+    <!--
+
+TemplateMo 579 Cyborg Gaming
+
+https://templatemo.com/tm-579-cyborg-gaming
+
+-->
+</head>
+
+<body>
+    <style>
+        body {
+            background-image: linear-gradient(#00000088,#00000081), url(https://shipsy.io/wp-content/uploads/2021/06/Blog-91.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100vh;
+            
+        }
+
+
+
+
+        .card {
+            margin-top: 20px;
+            background: transparent;
+            padding: 1%;
+            height: fit-content;
+            width: auto;
+            border-radius: 20px 20px;
+            margin-right: 5%;
+            margin-left: 5%;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            border: #c54f66;
+            border-color: white;
+            grid-template-columns: repeat(1, 0fr);
+        }
+
+        .card3 {
+            background: linear-gradient(180deg, rgba(77, 27, 134, 0.94) 6.37%, #6A2D68 100%);
+            border-radius: 20px 20px;
+            margin: 10px;
+            color: white;
+            height: 450px;
+            width: auto;
+
+        }
+
+        .card2 {
+            margin: 20px;
+            width: auto;
+            padding: 10px;
+            grid-template: repeat();
+            display: grid;
+            overflow-y: auto;
+            overflow-x: hidden;
+            grid-template-columns: repeat(2, 4fr);
+            grid-template-rows: auto;
+            border-color: white;
+            height: 75%;
+            color: white;
+        }
+
+        .card2::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        .card3::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        .look {
+            padding-right: 10px;
+            padding-left: 10px;
+            width: auto;
+            border-radius: 20px 20px;
+            background: linear-gradient(180deg, rgba(120, 42, 209, 0.545) 6.37%, #fa84f68d 100%);
+            margin: 5px;
+            height: fit-content;
+        }
+
+        .left {
+            display: flex;
+        }
+
+        .left p {
+            margin-right: 5px;
+        }
+
+        table {
+            padding: 20px 20px;
+            color: white;
+        }
+    </style>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+        <div class="preloader-inner">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+
+    <!-- ***** Header Area Start ***** -->
+    <header>
+        <a href="{%url 'Index'%}"
+            style="outline: none; border: none;text-decoration: none;font-size: 35px;font-weight: bolder;margin: 10px;"
+            class="logo">
+            <p> Supply Chain </p>
+        </a>
+
+        <div class="divNav" style="display: flex;justify-content: end;width: 90%;padding: 20px;">
+
+            <a href="{%url 'Index' %}">View Products</a>
+            <a href="{%url 'UserHistory' %}">History</a>
+            <a href="{%url 'profile' %}" class="active">Profile</a>
+            <a href="{%url 'logout' %}">Logout</a>
+        </div>
+    </header>
+    <p style="margin-left: 22px;color: #c54f66;font-weight: bold;"></p>
+
+    <div class="containerFor">
+        <div class="card">
+            <form class="fff" action="{%url 'updateProfile' %}" method="post">
+                {% csrf_token %}
+                <table
+                    style="background: linear-gradient(180deg, rgba(77, 27, 134, 0.94) 6.37%, #6A2D68 100%);border-radius: 20px 20px;padding: 30px 30px;">
+                    <tr>
+                        <td>
+                            <p>Name</p>
+                        </td>
+                        <td class="left">
+                            <p>:</p>
+                            <input type="text" placeholder="Name" name="name" value="{{name}}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Password</p>
+                        </td>
+                        <td class="left">
+                            <p>:</p>
+                            <input type="password" placeholder="Password" name="password" value="{{password}}">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <p>Mobile</p>
+                        </td>
+                        <td class="left">
+                            <p>:</p>
+                            <input name="mobile" type="number" placeholder="Mobile" value="{{mobile}}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Address</p>
+                        </td>
+                        <td class="left" style="align-items: center;">
+                            <p>:</p>
+                            <input type="text" name="address" placeholder="Address" value="{{address}}"
+                                style="height: 90px;bottom: 0;left: 20%;" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+
+                        </td>
+                        <td style="display: flex;align-items: end;justify-content: end;">
+                            <button class="btn" type="submit" style="width: fit-content;border-radius: 10px 10px; ">
+                                Update</button>
+                        </td>
+                    </tr>
+
+                </table>
+            </form>
+            {%if history%}
+            <div class="card3">
+                <p
+                    style="margin: 0px;padding: 0px;margin-bottom: 10px;margin-top: 10px;margin-left: 10px;font-weight: bold;width: 100%;text-align: center;height: fit-content;font-size: 20px;">
+                    My Orders</p>
+                <div class="card2">
+
+                    {%for use in history%}
+                    <div class="look">
+                        <div style="display: flex;justify-content: center;">
+                            <div>
+                                <small style="margin: 0px;padding: 0px;margin-top: 5px;"><b>Order id :</b> &nbsp;{{use.id}}
+                                </small>
+                                <p style="color:white;font-weight: bold;margin-bottom: 10px;">{{use.status}}</p>
+                                <img src="{{use.image}}"
+                                    style="width: 80px;height: 80px; border-radius: 10px;background-color: #c54f66;" />
+
+
+                            </div>
+                            <div style="text-align: end;width: 100%;padding: 5px;">
+                                <p style="color: white;">{{use.pname}}</p>
+                                <p><b>Qty :</b> &nbsp;{{use.qty}}</p>
+                                <p><b>Cost :</b> &nbsp;₹ {{use.cost}}/-</p>
+                                <p><b>Total :</b> &nbsp;₹ {{use.total}}/-</p>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            {%else%}
+            <div style="width: 100%;justify-content: center;display:flex;padding-top: 5%;">
+                <div
+                    style="display: flex;justify-content: center;width: 60%; padding: 100px 30px;background-image: linear-gradient(180deg, rgba(77, 27, 134, 0.94) 6.37%, #6A2D68 100%);border-radius: 20px 20px;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/11329/11329060.png "
+                        style="width: 200px;height: 200px;" />
+
+                </div>
+            </div>
+            {%endif%}
+        </div>
+
+
+
+        <script>
+
+        </script>
+        <!-- Scripts -->
+        <!-- Bootstrap core JavaScript -->
+        <script src="/static/vendor/jquery/jquery.min.js"></script>
+        <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+        <script src="/static/assets/js/isotope.min.js"></script>
+        <script src="/static/assets/js/owl-carousel.js"></script>
+        <script src="/static/assets/js/tabs.js"></script>
+        <script src="/static/assets/js/popup.js"></script>
+        <script src="/static/assets/js/custom.js"></script>
+
+
+</body>
+
+</html>

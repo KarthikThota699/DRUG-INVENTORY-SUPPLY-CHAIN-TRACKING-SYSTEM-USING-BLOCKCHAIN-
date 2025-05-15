@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <title>Supply Chain</title>
+
+  <!-- Bootstrap core CSS -->
+<link rel="stylesheet" href="/static/css/custom.css">
+  <!--
+
+TemplateMo 579 Cyborg Gaming
+
+https://templatemo.com/tm-579-cyborg-gaming
+
+-->
+</head>
+
+<body>
+  <style>
+    body {
+      
+      user-select: none;
+      height: 100vh;
+      
+      background-image: linear-gradient(#000000cc,#000000d3),url(http://images.theconversation.com/files/369567/original/file-20201116-23-18wlnv.jpg?ixlib=rb-4.1.0&q=45&auto=format&w=1356&h=668&fit=crop);
+      -webkit-user-select: none;
+      -moz-user-select: none;
+    
+    }
+
+    .card {
+      margin-top: 110px;
+      background-color: #2a2a2a7e;
+      padding: 3%;
+      width: auto;
+      gap: 20px;
+      border-radius: 20px 20px;
+      margin-right: 5%;
+      margin-left: 5%;
+      display: grid;
+      overflow: scroll;
+      height: 500px;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto;
+      border: #c54f66;
+      border-color: white;
+    }
+
+    .card::-webkit-scrollbar {
+      width: 0px;
+    }
+
+    label {
+      padding: 10px;
+      margin-left: 5px;
+
+      background: white;
+      background-color: white;
+      border-radius: 10px 10px ;
+  
+    }
+    input[type='radio']{
+      padding: 5px;
+      margin-left: 5px;
+      border-radius: 10px 10px ;
+    }
+
+    input[type='radio']:checked:after{
+      padding: 5px;
+      margin-left: 30px;
+      accent-color: black;
+
+      border-radius: 10px 10px ;
+    }
+    a{
+      color: white;
+    }
+    .look {
+      padding: 20px;
+      height: fit-content;
+      margin: 5px;
+      border-radius: 20px;
+      width: auto;
+      background-color: rgb(54, 54, 53);
+    }
+
+    #userDiv p {
+      font-size: 10px;
+    }
+    p{
+      color: white;
+    }
+  </style>
+
+  <!-- ***** Preloader Start ***** -->
+  <div id="js-preloader" class="js-preloader">
+    <div class="preloader-inner">
+      <span class="dot"></span>
+      <div class="dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+  <!-- ***** Preloader End ***** -->
+
+  <!-- ***** Header Area Start ***** -->
+  <header>
+    <a href="{%url 'Index'%}"
+        style="color: white;outline: none; border: none;text-decoration: none;font-size: 35px;font-weight: bolder;margin: 10px;"
+        class="logo">
+        <p style="color: white;margin: 0px;">Supply Chain</p>
+    </a>
+    <div class="divNav" style="display: flex;justify-content: end;width: 90%;padding: 20px;">
+
+        <a  href="{%url 'Index' %}">Add Products</a>
+        <a href="{%url 'viewItems' %}">Items</a>
+        <a href="{%url 'adminCart' %}" class="active">Cart</a>
+        <a href="{%url 'logout' %}">Logout</a>
+    </div>
+</header>
+  <p style="margin-left: 22px;color: #c54f66;font-weight: bold;"></p>
+  <div class="containerFor">
+    <div class="card">
+      {%for use in products%}
+      <div class="look">
+        <p class="userDetails" style="font-weight: bold; "> View&nbsp; {{use.name}} Details</p>
+        <div class="userDiv" style="display: none;">
+          <small>
+            <p>
+              {{use.name}}<br>
+              {{use.mobile}}<br>
+              {{use.email}}
+            </p>
+            <p style="font-weight: bold;">Address</p>
+            <small style="color: white;">
+              {{use.addresses}}
+            </small>
+          </small>
+        </div>
+        
+
+        <img src="{{use.image}}" style="width: 80px;height: 80px; border-radius: 10px;background-color: #c54f66;" />
+        <br><bold style="color: rgb(194, 31, 31);">{{use.message}}</bold>
+        <p style="color: white;">{{use.pname}}</p>
+        <p><b>Qty :</b> &nbsp;{{use.qty}}</p>
+        <p><b>Cost :</b> &nbsp;₹ {{use.cost}}/-</p>
+        <p><b>Total :</b> &nbsp;₹ {{use.total}}/-</p>
+        <p><b>Payment Mode :</b> &nbsp;{{use.statetOf}}</p>
+        {% if use.point == "Not" %}
+        <div style="display: flex;justify-content: center;" >
+          <p style="display: none;" id="contentPoint">{{use.status}}</p>
+          
+          <input type="radio" id="Ordered" name="Ordered" value="Accepted">
+          <label for="Ordered" onclick="updateOrder(this,'{{use.qty}}','{{use.imageId}}','{{use.id}}','Accepted')">Accepted</label>
+          <input type="radio" id="Shipped" name="Shipped" value="Shipped"><label for="Shipped" onclick="updateOrder(this,'{{use.qty}}','{{use.imageId}}','{{use.id}}','Shipped')">Shipped</label>
+          <input type="radio" id="In_Delivery" name="In Delivery" value="In Delivery"><label onclick="updateOrder(this,'{{use.qty}}','{{use.imageId}}','{{use.id}}','In Delivery')" for="In_Delivery">In&nbsp;Delivery</label>
+          <input type="radio" id="Delivered" name="Delivered" value="Delivered"><label for="Delivered" onclick="updateOrder(this,'{{use.qty}}','{{use.imageId}}','{{use.id}}','Delivered')">Delivered</label>
+          <script>
+            window.onload=()=>{
+                setLoader()
+            }
+          </script>
+          
+        </div>
+        {% else %}
+        <p>User Cancelled the Order</p>
+
+        {% endif %}
+        
+      </div>
+      {% endfor %}
+    </div>
+    <small style="align-items: center;justify-content: center;color: green;">{{ message }}</small>
+
+    <script>
+      const div = document.querySelectorAll(".userDetails");
+      const seconddiv = document.querySelectorAll(".userDiv");
+      div.forEach((element, indec) => {
+        element.addEventListener('click', () => {
+          const divPoint = seconddiv[indec];
+          if (divPoint) {
+
+            if (divPoint.style.display === 'none') {
+              divPoint.style.display = 'block'
+            } else if(divPoint.style.display='block'){
+              divPoint.style.display = 'none'
+            }
+          }
+
+        })
+      });
+      const radio = document.querySelectorAll("input[type='radio']")
+
+
+      radio.forEach(item=>{
+        item.addEventListener('click',()=>{
+          radio.forEach(remain=>{
+            if(remain!=item){
+              remain.checked=false
+            }
+          })
+        })
+      })      
+      function updateOrder(valuedSelected,qty,imageId,id,status){
+        fetch(`/submitUpdate?imageId=${imageId}&qty=${qty}&id=${id}&status=${status}`,{
+          'method':'GET'
+        }).then(data=>
+          data.json()
+        ).then(
+          view=>{
+            alert(view.message)
+          }
+        )
+
+      }
+      function setLoader(){
+       const loadText=document.getElementById('contentPoint').innerText
+
+       radio.forEach(item=>{
+          if(item.value==loadText){
+            item.checked=true
+          }
+        })
+      }
+
+
+
+
+    </script>
+
+
+    <!-- Scripts -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="/static/assets/js/isotope.min.js"></script>
+    <script src="/static/assets/js/owl-carousel.js"></script>
+    <script src="/static/assets/js/tabs.js"></script>
+    <script src="/static/assets/js/popup.js"></script>
+    <script src="/static/assets/js/custom.js"></script>
+
+
+</body>
+
+</html>

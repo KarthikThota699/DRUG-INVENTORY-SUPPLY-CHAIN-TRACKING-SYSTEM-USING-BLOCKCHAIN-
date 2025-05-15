@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <title>Supply Chain</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="/static/css/custom.css">
+    <!--
+
+TemplateMo 579 Cyborg Gaming
+
+https://templatemo.com/tm-579-cyborg-gaming
+
+-->
+</head>
+
+<body>
+    <style>
+        body {
+            background-image: linear-gradient(#00000088, #00000081), url(https://shipsy.io/wp-content/uploads/2021/06/Blog-91.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100vh;
+
+        }
+
+
+
+        .card {
+            margin-top: 10px;
+            background: linear-gradient(180deg, rgba(77, 27, 134, 0.94) 6.37%, #6A2D68 100%);
+            padding: 3%;
+            width: auto;
+            gap: 20px;
+            border-radius: 20px 20px;
+            margin-right: 5%;
+            margin-left: 5%;
+            display: grid;
+            overflow: scroll;
+            height: 530px;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: auto;
+            border: #c54f66;
+            border-color: white;
+        }
+
+        .card::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        .look {
+            padding: 20px;
+            height: fit-content;
+            border-radius: 20px;
+            width: auto;
+            background-color: rgba(242, 242, 242, 0.338);
+        }
+
+        p {
+            margin: 3px;
+            font-size: 19px;
+            color: white;
+        }
+    </style>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+        <div class="preloader-inner">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+
+    <!-- ***** Header Area Start ***** -->
+    <header>
+        <a href="{%url 'Index'%}"
+            style="outline: none; border: none;text-decoration: none;font-size: 35px;font-weight: bolder;margin: 10px;color: white;"
+            class="logo">
+            Supply Chain
+        </a>
+
+        <div class="divNav" style="display: flex;justify-content: end;width: 90%;padding: 20px;">
+
+            <a href="{%url 'Index' %}">View Products</a>
+            <a href="{%url 'UserHistory' %}" class="active">History</a>
+            <a href="{%url 'profile' %}">Profile</a>
+            <a href="{%url 'logout' %}">Logout</a>
+        </div>
+    </header>
+
+    {%if history%}
+    <div class="card">
+        {%for use in history%}
+        <div class="look">
+            {%if use.point == "Cancelled" %}
+            <p style="color:white;font-weight: bold;margin-bottom: 10px;">U Have Cancelled</p>
+            {% else %}
+            <p style="color:white;font-weight: bold;margin-bottom: 10px;">{{use.status}}</p>
+            {% endif %}
+            <img src="{{use.image}}" style="width: 80px;height: 80px; border-radius: 10px;background-color: #c54f66;" />
+            <p style="color: white;">{{use.pname}}</p>
+            <p><b>Qty :</b> &nbsp;{{use.qty}}</p>
+            <p><b>Cost :</b> &nbsp;₹ {{use.cost}}/-</p>
+            <p><b>Total :</b> &nbsp;₹ {{use.total}}/-</p>
+            <p><b>Payment Mode:</b> &nbsp; {{use.stateOFpurchase}}</p>
+            {%if use.point == "Not" %}
+            <div style="display: flex;justify-content: end;">
+                <form action="/updateStatusOFView/" method="post">
+                    {%csrf_token%}
+                    <input type="hidden" name="id" value="{{use.id}}">
+                    
+                    <button type="submit"
+                    style="padding: 10px;background-color: #7301016a;border-radius: 20px;color: white;border-color: red;border-width: 1px;">Cancel The Order</button>
+                </form>
+
+            </div>
+            {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    {%else%}
+    <div style="width: 100%;justify-content: center;display:flex;padding-top: 5%;">
+        <div
+            style="display: flex;justify-content: center;width: 60%; padding: 100px 30px;background-image: linear-gradient(180deg, rgba(77, 27, 134, 0.94) 6.37%, #6A2D68 100%);border-radius: 20px 20px;">
+            <img src="https://cdn-icons-png.flaticon.com/512/11329/11329060.png " style="width: 200px;height: 200px;" />
+
+        </div>
+    </div>
+    {%endif%}
+
+    <script>
+        function submit(element) {
+            const form = element.querySelector('form');
+            if (form) {
+                form.submit()
+            }
+        }
+    </script>
+    <!-- Scripts -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="/static/assets/js/isotope.min.js"></script>
+    <script src="/static/assets/js/owl-carousel.js"></script>
+    <script src="/static/assets/js/tabs.js"></script>
+    <script src="/static/assets/js/popup.js"></script>
+    <script src="/static/assets/js/custom.js"></script>
+
+
+</body>
+
+</html>

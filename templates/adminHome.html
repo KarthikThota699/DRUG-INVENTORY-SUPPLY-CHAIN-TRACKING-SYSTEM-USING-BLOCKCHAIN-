@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <title>Supply Chain</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/css/custom.css" rel="stylesheet">
+
+
+
+
+
+</head>
+
+<body>
+    <style>
+        body {
+            user-select: none;
+      height: 100vh;
+      background-image: linear-gradient(#000000cc,#000000d3),url(http://images.theconversation.com/files/369567/original/file-20201116-23-18wlnv.jpg?ixlib=rb-4.1.0&q=45&auto=format&w=1356&h=668&fit=crop);
+      -webkit-user-select: none;
+      -moz-user-select: none;
+        }
+
+        .containerFor {
+            width: 100%;
+            padding-top: 5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .containerFor img {
+            width: 80px;
+            border-radius: 20px;
+            height: 80px;
+            align-items: center;
+            justify-self: center;
+            padding: 1.9%;
+            background-color: antiquewhite;
+            margin: 3px;
+        }
+
+        .card {
+            margin-top: 20px;
+            background:linear-gradient(180deg, rgba(88, 209, 230, 0.727) 6.37%, #6f57f8ea 100%);
+            padding: 0.9%;
+            border-radius: 5%;
+            border: #c54f66;
+            border-color: white;
+
+        }
+
+        a{
+            color: white;
+        }
+        .fieldSet p {
+            color: black;
+        }
+
+        #imageControll {
+            background-color: black;
+            color: #ffffff;
+            border: #c54f66;
+            border-radius: 10px;
+            cursor: pointer;
+            display: inline-block;
+            outline-color: #c54f66;
+            outline: #c54f66;
+        }
+
+        .btn {
+            color: white;
+            background: linear-gradient(180deg, rgba(77, 27, 134, 0.94) 6.37%, #6A2D68 100%);;
+        }
+
+        small {
+            color: red;
+        }
+        .fieldSet p{
+            font-weight: bolder;
+            margin: 0px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+        .fieldSet input{
+            width: 90%;
+        }
+    </style>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="js-preloader" class="js-preloader">
+        <div class="preloader-inner">
+            <span class="dot"></span>
+            <div class="dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+    <header>
+        <a href="{%url 'Index'%}"
+            style="color: white;outline: none; border: none;text-decoration: none;font-size: 35px;font-weight: bolder;margin: 10px;"
+            class="logo">
+            <p style="color: white;margin: 0px;">Supply Chain</p>
+        </a>
+        <div class="divNav" style="display: flex;justify-content: end;width: 90%;padding: 20px;">
+
+            <a class="active" href="{%url 'Index' %}">Add Products</a>
+            <a href="{%url 'viewItems' %}">Items</a>
+            <a href="{%url 'adminCart' %}">Cart</a>
+            <a href="{%url 'logout' %}">Logout</a>
+        </div>
+    </header>
+    <!-- ***** Header Area Start ***** -->
+
+    <p style="margin-left: 22px;color: #c54f66;font-weight: bold;"></p>
+
+    <div class="containerFor">
+        <div class="card">
+
+            <form action="{%url 'addProduct' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <img src="/static/img/photo.png" id="imageSelect" hidden>
+
+                <input type="file" id="imageControll" accept="image/*" name="image" value="Choose" required>
+
+                <div class="fieldSet">
+
+                    <p>Product Name</p>
+                    <input type="text" placeholder="Item" name="pname" value="{{ pname }}" required>
+                    <small>{{nameError}}</small>
+
+                    <div class="fieldSet">
+                        <p>Product Qty</p>
+                        <input type="number" placeholder="Qty" name="pqty" value="{{ pqty }}" required>
+                        <small>{{QtyError}}</small>
+                    </div>
+                    <div class="fieldSet">
+                        <p>Product Cost</p>
+                        <input type="number" placeholder="Cost in ₹/-" name="cost" value="{{ 'cost' }}" required>
+                        <small>{{CostError}}</small>
+                    </div>
+                    <div style="display: flex;justify-content: center;">
+                        <button class="btn" type="submit">
+                            Submit
+                        </button>
+                    </div>
+
+            </form>
+
+        </div>
+        <small style="align-items: center;justify-content: center;color: green;">{{ message }}</small>
+
+        <script>
+            document.getElementById("imageControll").addEventListener('change', function (event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        const img = document.getElementById("imageSelect")
+                        img.src = e.target.result;
+                        img.style.display = 'block'
+                        img.hidden = false
+                    }
+                    reader.readAsDataURL(file)
+
+                }
+            })
+        </script>
+
+
+        <!-- Scripts -->
+        <!-- Bootstrap core JavaScript -->
+        <script src="/static/vendor/jquery/jquery.min.js"></script>
+        <script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+        <script src="/static/assets/js/isotope.min.js"></script>
+        <script src="/static/assets/js/owl-carousel.js"></script>
+        <script src="/static/assets/js/tabs.js"></script>
+        <script src="/static/assets/js/popup.js"></script>
+        <script src="/static/assets/js/custom.js"></script>
+
+
+</body>
+
+</html>
